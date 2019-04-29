@@ -1,0 +1,6 @@
+/Users/Anton/Com/Compiler/Compiler/bin/Debug/Compiler.exe
+/Users/Anton/Com/Compiler/Compiler/bin/Debug/Compiler.pdb
+/Users/Anton/Com/Compiler/Compiler/obj/x86/Debug/Compiler.csprojAssemblyReference.cache
+/Users/Anton/Com/Compiler/Compiler/obj/x86/Debug/Compiler.csproj.CoreCompileInputs.cache
+/Users/Anton/Com/Compiler/Compiler/obj/x86/Debug/Compiler.exe
+/Users/Anton/Com/Compiler/Compiler/obj/x86/Debug/Compiler.pdb
