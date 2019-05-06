@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Compiler.Keywords;
 
 namespace Compiler
 {
@@ -16,12 +17,30 @@ namespace Compiler
             Parser parser = new Parser();
             VirtualMachine virtualMachine = new VirtualMachine();
 
+           
             lexer.GetCharsFromFile();
-            Console.WriteLine(Lexer.charArray);
+            Console.WriteLine(lexer.charArray);
 
-            Console.WriteLine(Lexer.ch);
+            for (int i = 0; i < 30; i++)
+            {
+                lexer.NextToken();
+                Console.WriteLine(lexer.symb + " " + lexer.value);
+            }
+            
+
+            
 
             Console.ReadKey();
+
+
+
+
+
+
+
+
+
+
 
         }
     }

@@ -11,12 +11,14 @@ namespace Compiler
 {
     class Lexer
     {
-        public static string charArray = null;
-        public static int charPosition = -1;
-        public static string filePath = @"C:\Users\Anton Pushkin\Desktop\Compiler\Compiler\Compiler\Code.txt";
-        public static SymbolsAndStatements symb;
-        public static string value;
-        public static char ch;
+        public string charArray = null;
+        public int charPosition = -1;
+        public string filePath = @"C:\Users\Anton Pushkin\Desktop\Compiler\Compiler\Compiler\Code.txt";
+        public string symb;
+        public string value;
+        public char ch;
+        public char EOFchar = '$';
+        public char charValue;
 
         void Error(string message)
         {
@@ -39,56 +41,97 @@ namespace Compiler
             reader.Close();
             reader.Dispose();
             charArray = Regex.Replace(charArray, @"\t|\n|\r| ", "");
+            NextChar();
         }
 
-        public char NextChar()
+        public void NextChar()
         {
-            if(charArray == null || filePath != null)
-            {
-                GetCharsFromFile();
-            }
-            else
-            {
-                Error("File path is incorrect");
-            }
-
             charPosition++;
 
-            if(charPosition < charArray.Length)
+            if (charPosition < charArray.Length)
             {
-                return charArray[charPosition];
+                charValue = charArray[charPosition];
             }
             else
             {
-                return '$';
+                charValue = EOFchar;
             }
         }
 
-        char charValue = ' ';
+
+
+
 
         public void NextToken()
         {
-            SymbolsAndStatements.Words tmpSymb = 0;
+            string tmpSymb = null;
             string tmpValue = null;
 
-            while (tmpSymb == 0)
+            while (tmpSymb == null)
             {
-                if (charValue == '$')
+                if (charValue == EOFchar)
                 {
-                    tmpSymb = SymbolsAndStatements.Words.EOF;
+                    tmpSymb = Enum.GetName(typeof(SymbolsAndStatements.Words),
+                                SymbolsAndStatements.Words.EOF);
+
+                }
+                else if (Char.IsDigit(charValue))
+                {
+                    int intValue = 0;
+                    while (charValue != EOFchar && Char.IsDigit(charValue))
+                    {
+                        intValue = intValue * 10 + (int)charValue - 48;
+                        NextChar();
+                    }
+                    tmpValue = intValue.ToString();
+                    tmpSymb = SymbolsAndStatements.Words.NUM.ToString();
+
+
+                }
+                else if (Char.IsLetter(charValue))
+                {
+                    string ident = "";
+                    while (charValue != EOFchar && Char.IsLetter(charValue))
+                    {
+                        ident += Char.ToLower(charValue);
+                        NextChar();
+                    }
+                    ident = ident.ToUpper();
+                    if (Enum.IsDefined(typeof(SymbolsAndStatements.Words), ident))
+                    {
+                        tmpSymb = ident;
+                        tmpValue = ident.ToLower();
+                    } else if (ident.Length == 1)
+                    {
+                        tmpSymb = SymbolsAndStatements.Words.ID.ToString();
+                        tmpValue = ident.ToLower();
+                    }
+                    else
+                    {
+                        Error("Unexpected symbol: " + ident);
+                    }
+                }
+                else if(Symbols.dic.ContainsValue(charValue))
+                {
+                    foreach (KeyValuePair<string, char> item in Symbols.dic)
+                    {
+                        if (charValue == item.Value)
+                        {
+                            tmpSymb = Symbols.dic.FirstOrDefault(x => x.Value == charValue).Key;
+                            tmpValue = charValue.ToString();
+                        }
+                    }
+                    NextChar();
                 }
                 else
                 {
-                    foreach(Char ss in Enum.GetValues(typeof(Symbols.Words)))
-                    {
-                        if (charValue == ss)
-                        {
-                            //tmpSymb == Symbols[charValue];
-
-                        }
-                    }
+                    Error("Lexer error: unknown symbol - " + charValue);
+                    NextChar();
                 }
             }
+            symb = tmpSymb;
+            value = tmpValue;
+            
         }
     }
 }

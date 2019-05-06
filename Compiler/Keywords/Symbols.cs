@@ -8,6 +8,18 @@ namespace Compiler.Keywords
 {
     class Symbols
     {
+        public static Dictionary<string, char> dic = new Dictionary<string, char>
+        {
+            ["LBRA"] = '{',
+            ["RBRA"] = '}',
+            ["EQUAL"] = '=',
+            ["SEMICOLON"] = ';',
+            ["LPAR"] = '(',
+            ["RPAR"] = ')',
+            ["PLUS"] = '+',
+            ["MINUS"] = '-',
+            ["LESS"] = '<'
+        };
         public enum Words
         {
             LBRA = '{',
@@ -21,30 +33,30 @@ namespace Compiler.Keywords
             LESS = '<'
         }
 
-        public bool IsChar(char ch)
+        public static string CharSymbol(char ch)
         {
             switch (ch)
             {
                 case (char)Words.EQUAL:
-                    return true;
+                    return (Enum.GetName(typeof(Words),Words.EQUAL));
                 case (char)Words.LBRA:
-                    return true;
+                    return (Enum.GetName(typeof(Words), Words.LBRA));
                 case (char)Words.LESS:
-                    return true;
+                    return (Enum.GetName(typeof(Words), Words.LESS));
                 case (char)Words.LPAR:
-                    return true;
+                    return (Enum.GetName(typeof(Words), Words.LPAR));
                 case (char)Words.MINUS:
-                    return true;
+                    return (Enum.GetName(typeof(Words), Words.MINUS));
                 case (char)Words.PLUS:
-                    return true;
+                    return (Enum.GetName(typeof(Words), Words.PLUS));
                 case (char)Words.RBRA:
-                    return true;
+                    return (Enum.GetName(typeof(Words), Words.RBRA));
                 case (char)Words.RPAR:
-                    return true;
+                    return (Enum.GetName(typeof(Words), Words.RPAR));
                 case (char)Words.SEMICOLON:
-                    return true;
+                    return (Enum.GetName(typeof(Words), Words.SEMICOLON));
                 default:
-                    return false;
+                    return "ERROR";
             }
         }
     }
