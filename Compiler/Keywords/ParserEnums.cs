@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Compiler.Keywords
 {
-    class ParserEnums
+    public class ParserEnums
     {
-        enum Words
+        public enum Words
         {
             VAR,
             CONST,

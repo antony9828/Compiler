@@ -13,18 +13,16 @@ namespace Compiler
         {
             Compiler compiler = new Compiler();
             Lexer lexer = new Lexer();
-            Node node = new Node();
-            Parser parser = new Parser();
             VirtualMachine virtualMachine = new VirtualMachine();
 
            
             lexer.GetCharsFromFile();
-            Console.WriteLine(lexer.charArray);
-
+            Console.WriteLine(Lexer.charArray);
+            Console.WriteLine(SymbolsAndStatements.Words.ID.ToString());
             for (int i = 0; i < 30; i++)
             {
                 lexer.NextToken();
-                Console.WriteLine(lexer.symb + " " + lexer.value);
+                Console.WriteLine("\"{0}\" = \"{1}\"", Lexer.symb, Lexer.value);
             }
             
 

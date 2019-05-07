@@ -11,14 +11,13 @@ namespace Compiler
 {
     class Lexer
     {
-        public string charArray = null;
-        public int charPosition = -1;
-        public string filePath = @"C:\Users\Anton Pushkin\Desktop\Compiler\Compiler\Compiler\Code.txt";
-        public string symb;
-        public string value;
-        public char ch;
-        public char EOFchar = '$';
-        public char charValue;
+        public static string charArray = null;
+        public static int charPosition = -1;
+        public static string filePath = @"C:\Users\Anton Pushkin\Desktop\Compiler\Compiler\Compiler\Code.txt";
+        public static string symb = null;
+        public static string value = null;
+        public static char EOFchar = '$';
+        public static char charValue;
 
         void Error(string message)
         {

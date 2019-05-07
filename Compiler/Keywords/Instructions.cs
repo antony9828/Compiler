@@ -22,7 +22,7 @@ namespace Compiler.Keywords
         HALT    - exit
          */
 
-        enum Words
+        public enum Words
         {
             FETCH,
             STORE,
