@@ -13,7 +13,7 @@ namespace Compiler
     {
         public static string charArray = null;
         public static int charPosition = -1;
-        public static string filePath = @"C:\Users\Anton Pushkin\Desktop\Compiler\Compiler\Compiler\Code.txt";
+        public static string filePath = null;
         public static string symb = null;
         public static string value = null;
         public static char EOFchar = '$';
@@ -63,6 +63,7 @@ namespace Compiler
 
         public void NextToken()
         {
+            
             string tmpSymb = null;
             string tmpValue = null;
 
@@ -130,7 +131,7 @@ namespace Compiler
             }
             symb = tmpSymb;
             value = tmpValue;
-            
+            Console.WriteLine("\"{0}\" = \"{1}\"", Lexer.symb, Lexer.value);
         }
     }
 }
