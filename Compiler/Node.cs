@@ -9,11 +9,11 @@ namespace Compiler
 {
     public class Node
     {
-        public static ParserEnums.Words kind;
-        public static string value = null;
-        public static Node op1 = null;
-        public static Node op2 = null;
-        public static Node op3 = null;
+        public ParserEnums.Words kind;
+        public string value = null;
+        public Node op1 = null;
+        public Node op2 = null;
+        public Node op3 = null;
 
         public Node(ParserEnums.Words kind_, string value_, Node op1_, Node op2_, Node op3_)
         {
