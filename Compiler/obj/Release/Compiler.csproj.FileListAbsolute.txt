@@ -4,3 +4,4 @@ C:\Users\Anton Pushkin\Desktop\Compiler\Compiler\Compiler\bin\Release\Compiler.p
 C:\Users\Anton Pushkin\Desktop\Compiler\Compiler\Compiler\obj\Release\Compiler.csproj.CoreCompileInputs.cache
 C:\Users\Anton Pushkin\Desktop\Compiler\Compiler\Compiler\obj\Release\Compiler.exe
 C:\Users\Anton Pushkin\Desktop\Compiler\Compiler\Compiler\obj\Release\Compiler.pdb
+C:\Users\Anton Pushkin\Desktop\Compiler\Compiler\Compiler\obj\Release\Compiler.csprojAssemblyReference.cache

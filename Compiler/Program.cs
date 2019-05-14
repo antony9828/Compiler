@@ -11,7 +11,16 @@ namespace Compiler
     {
         static void Main(string[] args)
         {
-            Lexer.filePath = @"C:\Users\Anton Pushkin\Desktop\Compiler\Compiler\Compiler\Code.txt";
+            string path;
+            if (args.Count() == 0)  // Warning : Index was out of the bounds of the array
+            {
+                path = "Code.txt";
+            }
+            else
+            {
+                path = args[0];
+            }
+            Lexer.filePath = path;
             var lexer = new Lexer();
             lexer.GetCharsFromFile();
             Console.WriteLine(Lexer.charArray);
@@ -20,17 +29,17 @@ namespace Compiler
 
 
             var node = parser.Parse();
-            var node1 = parser.Parse();
-            //var node1 = parser.Parse();
             var program = compiler.Compile(node);
-            Console.WriteLine(program.Count());
             foreach(Object obj in program)
             {
                 Console.WriteLine(obj);
             }
-            
+            G(node);
             var virtualMachine = new VirtualMachine();
             virtualMachine.Run(program);
+            //runConsole.WriteLine(program[program.Count() - 1]);
+
+            
 
 
 
@@ -67,6 +76,24 @@ namespace Compiler
 
 
 
+        }
+
+        static void G(Node node, int deep = 0)
+        {
+            if (node.kind == ParserEnums.Words.EMPTY) return;
+            Console.WriteLine(new string('-', deep)+node.kind);
+            if (node.op1 != null)
+            {
+                G(node.op1, deep + 1);
+            }
+            if (node.op2 != null)
+            {
+                G(node.op2, deep + 1);
+            }
+            if (node.op3 != null)
+            {
+                G(node.op3, deep + 1);
+            }
         }
     }
 }

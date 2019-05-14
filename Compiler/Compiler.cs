@@ -50,7 +50,7 @@ namespace Compiler
                     Generation(Instructions.Words.LT);
                     break;
                 case ParserEnums.Words.SET:
-                    Compile(node.op1);
+                    Compile(node.op2);
                     Generation(Instructions.Words.STORE);
                     Generation(node.op1.value);
                     break;

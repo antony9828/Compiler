@@ -43,7 +43,7 @@ namespace Compiler
             NextChar();
         }
 
-        public void NextChar()
+        void NextChar()
         {
             charPosition++;
 
@@ -100,7 +100,7 @@ namespace Compiler
                     if (Enum.IsDefined(typeof(SymbolsAndStatements.Words), ident))
                     {
                         tmpSymb = ident;
-                        tmpValue = ident.ToLower();
+                        //tmpValue = ident.ToLower();
                     } else if (ident.Length == 1)
                     {
                         tmpSymb = SymbolsAndStatements.Words.ID.ToString();
@@ -118,7 +118,7 @@ namespace Compiler
                         if (charValue == item.Value)
                         {
                             tmpSymb = Symbols.dic.FirstOrDefault(x => x.Value == charValue).Key;
-                            tmpValue = charValue.ToString();
+                            //tmpValue = charValue.ToString();
                         }
                     }
                     NextChar();

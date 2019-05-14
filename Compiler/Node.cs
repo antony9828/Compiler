@@ -15,7 +15,7 @@ namespace Compiler
         public Node op2 = null;
         public Node op3 = null;
 
-        public Node(ParserEnums.Words kind_, string value_, Node op1_, Node op2_, Node op3_)
+        public Node(ParserEnums.Words kind_, string value_, Node op1_ = null, Node op2_ = null, Node op3_ = null)
         {
             kind = kind_;
             value = value_;

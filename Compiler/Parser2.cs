@@ -7,11 +7,11 @@ using Compiler.Keywords;
 
 namespace Compiler
 {
-    public class Parser
+    class Parser2
     {
         private Lexer lexer;
 
-        public Parser(string path)
+        public Parser2(string path)
         {
             Lexer.filePath = path;
             lexer = new Lexer();
@@ -26,13 +26,13 @@ namespace Compiler
         {
             if(Lexer.symb != null && Lexer.symb == SymbolsAndStatements.Words.ID.ToString())
             {
-                Node n = new Node(ParserEnums.Words.VAR, Lexer.value);
+                Node n = new Node(ParserEnums.Words.VAR, Lexer.value, null, null, null);
                 lexer.NextToken();
                 return n;
             }
             else if (Lexer.symb != null && Lexer.symb == SymbolsAndStatements.Words.NUM.ToString())
             {
-                Node n = new Node(ParserEnums.Words.CONST, Lexer.value);
+                Node n = new Node(ParserEnums.Words.CONST, Lexer.value, null, null, null);
                 lexer.NextToken();
                 return n;
             }
@@ -45,20 +45,20 @@ namespace Compiler
         private Node Summa()
         {
             Node n = Term();
-            ParserEnums.Words kind__;
-
-            while (Lexer.symb == SymbolsAndStatements.Words.PLUS.ToString() || 
+            ParserEnums.Words kind;
+            while(Lexer.symb == SymbolsAndStatements.Words.PLUS.ToString() ||
                 Lexer.symb == SymbolsAndStatements.Words.MINUS.ToString())
             {
-                if (Lexer.symb == SymbolsAndStatements.Words.PLUS.ToString())
+                if(Lexer.symb == SymbolsAndStatements.Words.PLUS.ToString())
                 {
-                    kind__ = ParserEnums.Words.ADD;  
-                } else
+                    kind = ParserEnums.Words.ADD;
+                }
+                else
                 {
-                    kind__ = ParserEnums.Words.SUB;
+                    kind = ParserEnums.Words.SUB;
                 }
                 lexer.NextToken();
-                n = new Node(kind__, null, n, Term(), null);
+                n = new Node(kind, null, n, Term(), null);
             }
             return n;
         }
@@ -66,7 +66,7 @@ namespace Compiler
         private Node Test()
         {
             Node n = Summa();
-            if (Lexer.symb == SymbolsAndStatements.Words.LESS.ToString())
+            if(Lexer.symb == SymbolsAndStatements.Words.LESS.ToString())
             {
                 lexer.NextToken();
                 n = new Node(ParserEnums.Words.LT, null, n, Summa(), null);
@@ -76,12 +76,12 @@ namespace Compiler
 
         private Node Expr()
         {
-            if (Lexer.symb != SymbolsAndStatements.Words.ID.ToString())
+            if(Lexer.symb != SymbolsAndStatements.Words.ID.ToString())
             {
                 return Test();
             }
             Node n = Test();
-            if (n != null && n.kind == ParserEnums.Words.VAR && 
+            if (n != null && n.kind == ParserEnums.Words.VAR &&
                 Lexer.symb == SymbolsAndStatements.Words.EQUAL.ToString())
             {
                 lexer.NextToken();
@@ -92,28 +92,25 @@ namespace Compiler
 
         private Node ParenExpr()
         {
-            if (Lexer.symb != SymbolsAndStatements.Words.LPAR.ToString())
+            if(Lexer.symb != SymbolsAndStatements.Words.LPAR.ToString())
             {
                 Error("\"(\" expected");
             }
             lexer.NextToken();
-
             Node n = Expr();
-
-            if(Lexer.symb != SymbolsAndStatements.Words.RPAR.ToString())
+            if (Lexer.symb != SymbolsAndStatements.Words.RPAR.ToString())
             {
                 Error("\")\" expected");
             }
-
             lexer.NextToken();
             return n;
         }
 
+        Node n = null;
 
         private Node Statement()
         {
-            Node n;
-            if (Lexer.symb == SymbolsAndStatements.Words.IF.ToString())
+            if(Lexer.symb == SymbolsAndStatements.Words.IF.ToString())
             {
                 n = new Node(ParserEnums.Words.IF1, null, null, null, null);
                 lexer.NextToken();
@@ -133,26 +130,28 @@ namespace Compiler
                 n.op1 = ParenExpr();
                 n.op2 = Statement();
             }
-            else if(Lexer.symb == SymbolsAndStatements.Words.SEMICOLON.ToString())
+            else if (Lexer.symb == SymbolsAndStatements.Words.SEMICOLON.ToString())
             {
                 n = new Node(ParserEnums.Words.EMPTY, null, null, null, null);
                 lexer.NextToken();
             }
             else if (Lexer.symb == SymbolsAndStatements.Words.PRINT.ToString())
             {
-                n = new Node(ParserEnums.Words.PRINT, null, null, null, null);
+                n = new Node(ParserEnums.Words.EMPTY, null, null, null, null);
                 lexer.NextToken();
-                n.op1 = ParenExpr();
+                n.op1 = Expr();
             }
             else if (Lexer.symb == SymbolsAndStatements.Words.LBRA.ToString())
             {
                 n = new Node(ParserEnums.Words.EMPTY, null, null, null, null);
                 lexer.NextToken();
-                while (Lexer.symb != SymbolsAndStatements.Words.RBRA.ToString()){
+                while(Lexer.symb != SymbolsAndStatements.Words.RBRA.ToString())
+                {
                     n = new Node(ParserEnums.Words.SEQ, null, n, Statement(), null);
                 }
                 lexer.NextToken();
-            } else
+            }
+            else
             {
                 n = new Node(ParserEnums.Words.EXPR, null, Expr(), null, null);
                 if(Lexer.symb != SymbolsAndStatements.Words.SEMICOLON.ToString())
@@ -168,11 +167,11 @@ namespace Compiler
         {
             lexer.NextToken();
             Node node = new Node(ParserEnums.Words.PROG, null, Statement(), null, null);
-            if (Lexer.symb != SymbolsAndStatements.Words.EOF.ToString())
+            if(Lexer.symb != SymbolsAndStatements.Words.EOF.ToString())
             {
                 Error("Invalid statement syntax");
             }
-            return node;
+            return n;
         }
     }
 }

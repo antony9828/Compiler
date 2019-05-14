@@ -11,7 +11,7 @@ namespace Compiler
     {
         public void Run(List<Object> program)
         {
-            List<int> ar = new List<int>(26);
+            List<int> ar = new List<int>() { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             Stack<int> stack = new Stack<int>();
             int pc = 0;
             Object arg = null;
@@ -26,13 +26,14 @@ namespace Compiler
                 {
                     if (arg is char || arg is string)
                     {
-                        stack.Push(ar[arg.GetHashCode() - 97]);
+                        
+                        stack.Push(ar[arg.GetHashCode() + 842352731]);
                         pc += 2;
                     }
                 }
                 else if (op.Equals(Instructions.Words.STORE))
                 {
-                    ar[arg.GetHashCode() - 97] = stack.Pop();
+                    ar[arg.GetHashCode() + 842352731] = stack.Pop();
                     pc += 2;
                 }
                 else if (op.Equals(Instructions.Words.PUSH))
@@ -48,7 +49,7 @@ namespace Compiler
                 }
                 else if (op.Equals(Instructions.Words.POP))
                 {
-                    stack.Push(arg.GetHashCode() - 97);
+                    stack.Push(arg.GetHashCode() + 842352731);
                     stack.Pop();
                     pc += 1;
                 }
@@ -69,6 +70,7 @@ namespace Compiler
                 else if (op.Equals(Instructions.Words.OUT))
                 {
                     arg = program[pc + 2];
+                    Console.WriteLine(ar[arg.GetHashCode() + 842352731]);
                     pc += 3;
                 }
                 else if (op.Equals(Instructions.Words.LT))
@@ -89,7 +91,7 @@ namespace Compiler
                 {
                     if(stack.Pop() == 0 && arg is int)
                     {
-                        pc = Int32.Parse((string)arg);
+                        pc = (int)arg;
                     }
                     else
                     {
@@ -109,13 +111,15 @@ namespace Compiler
                 }
                 else if (op.Equals(Instructions.Words.JMP) && arg is int)
                 {
-                   pc = Int32.Parse((string)arg);
+                   pc = (int)arg;
                 }
                 else if (op.Equals(Instructions.Words.HALT))
                 {
                     break;
                 }
             }
+            
+           
         }
     }
 }
