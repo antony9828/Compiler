@@ -23,7 +23,13 @@ namespace Compiler.Keywords
             SEQ,
             EXPR,
             PRINT,
-            PROG
+            PROG,
+            ADDTOLL,
+            GETFROMLL,
+            REMOVEFROMLL,
+            ADDTOHS,
+            REMOVEFROMHS,
+            CONTAINSINHS
         }
     }
 }

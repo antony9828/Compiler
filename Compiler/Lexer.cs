@@ -22,6 +22,7 @@ namespace Compiler
         void Error(string message)
         {
             Console.WriteLine("Lexer error: " + message);
+            Console.ReadKey();
             Environment.Exit(0);
         }
 
@@ -97,14 +98,30 @@ namespace Compiler
                         NextChar();
                     }
                     ident = ident.ToUpper();
+
                     if (Enum.IsDefined(typeof(SymbolsAndStatements.Words), ident))
                     {
                         tmpSymb = ident;
                         //tmpValue = ident.ToLower();
-                    } else if (ident.Length == 1)
+                    } 
+                    else if (ConditionalStatements.dic.ContainsValue(ident.ToLower()))
+                    {
+                        foreach (KeyValuePair<string, string> item in ConditionalStatements.dic)
+                        {
+                            //Console.WriteLine(ident.ToLower());
+                            //Console.WriteLine(item.Value);
+                            if (ident.ToLower() == item.Value)
+                            {
+                                tmpSymb = ConditionalStatements.dic.FirstOrDefault(x => x.Value == ident.ToLower()).Key;
+                                //tmpValue = charValue.ToString();
+                            }
+                        }
+                    }
+                    else if ((ident.Length == 1) || (ident.Length == 2) || (ident.Length == 3))
                     {
                         tmpSymb = SymbolsAndStatements.Words.ID.ToString();
                         tmpValue = ident.ToLower();
+                        //NextChar();
                     }
                     else
                     {
@@ -131,7 +148,17 @@ namespace Compiler
             }
             symb = tmpSymb;
             value = tmpValue;
-            Console.WriteLine("\"{0}\" = \"{1}\"", Lexer.symb, Lexer.value);
+        }
+
+        public List<Token> GetTokens()
+        {
+            List<Token> result = new List<Token>();
+            while (symb != SymbolsAndStatements.Words.EOF.ToString())
+            {
+                NextToken();
+                result.Add(new Token(symb, value));
+            }
+            return result;
         }
     }
 }

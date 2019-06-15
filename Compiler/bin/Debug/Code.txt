@@ -1,9 +1,26 @@
 ﻿{
-	a = 5;
-    b = 12;
-    while (a < b) {
-        a = a + 3;
-	}
-    print (a);
+    a = 1;
+    b = 5;
+    aaa.addElement(5);
+    aaa.addElement(5);
+    aaa.addElement(5);
+    aaa.addElement(88);
+    aaa.addElement(114);
+    print(aaa);
+    aaa.removeElement(114);
+    c = aaa.contains(88);
+    print(c);
+    aa.add(10);
+    aa.add(45);
+    aa.add(30);
+    aa.remove(1);
+    k = aa.get(0);
+    print(aa);
+    print(aaa);
 
+    if (c < 1){
+        a = a + b;
+    }
+
+    print(a);
 }

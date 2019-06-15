@@ -18,7 +18,8 @@ namespace Compiler.Keywords
             ["RPAR"] = ')',
             ["PLUS"] = '+',
             ["MINUS"] = '-',
-            ["LESS"] = '<'
+            ["LESS"] = '<',
+            ["DOT"] = '.'
         };
     }
 }

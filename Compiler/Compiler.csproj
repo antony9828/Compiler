@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -44,17 +46,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compiler.cs" />
+    <Compile Include="HashSet\HSet.cs" />
     <Compile Include="Keywords\ConditionalStatements.cs" />
     <Compile Include="Keywords\Instructions.cs" />
     <Compile Include="Keywords\ParserEnums.cs" />
     <Compile Include="Keywords\Symbols.cs" />
     <Compile Include="Keywords\SymbolsAndStatements.cs" />
     <Compile Include="Lexer.cs" />
+    <Compile Include="LinkedList\LList.cs" />
+    <Compile Include="LinkedList\LNode.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Parser.cs" />
-    <Compile Include="Parser2.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Token.cs" />
     <Compile Include="VirtualMachine.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -63,5 +68,6 @@
   <ItemGroup>
     <Content Include="Code.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

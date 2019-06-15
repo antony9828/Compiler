@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Compiler.Keywords;
+using Compiler.LinkedList;
 
 namespace Compiler
 {
@@ -11,6 +12,20 @@ namespace Compiler
     {
         static void Main(string[] args)
         {
+            //LList list = new LList();
+            //list.InsertFront(list, 1);
+            //list.InsertFront(list, 2);
+            //list.InsertFront(list, 3);
+            //list.InsertFront(list, 4);
+            //list.InsertFront(list, 5);
+            //list.InsertFront(list, 6);
+            //list.InsertLast(list, 7);
+            //list.InsertLast(list, 8);
+            //list.InsertFront(list, 9);
+            //list.DeleteNodebyKey(list, 3);
+
+            //list.PrintAllNodes();
+
             string path;
             if (args.Count() == 0)  // Warning : Index was out of the bounds of the array
             {
@@ -19,27 +34,61 @@ namespace Compiler
             else
             {
                 path = args[0];
+                if (!System.IO.File.Exists(args[0]))
+                {
+                    Console.WriteLine($"Path {path} is incorrect");
+                    return;
+                }
             }
+
+            var needLog = IsNeedLogs(args);
+
             Lexer.filePath = path;
             var lexer = new Lexer();
             lexer.GetCharsFromFile();
-            Console.WriteLine(Lexer.charArray);
-            var parser = new Parser(Lexer.filePath);
+
+            
+
+            var parser = new Parser();
+
+
             var compiler = new Compiler();
 
 
-            var node = parser.Parse();
-            var program = compiler.Compile(node);
-            foreach(Object obj in program)
+            var tokens = lexer.GetTokens();
+
+            if (needLog)
             {
-                Console.WriteLine(obj);
+                foreach (var token in tokens)
+                {
+                    Console.WriteLine($"'{token.key}':'{token.value}'");
+                }
             }
-            G(node);
+
+            var node = parser.Parse(tokens);
+
+            if (needLog)
+                G(node);
+
+            var program = compiler.Compile(node);
+
+            if (needLog)
+            {
+                var i = 0;
+                foreach (Object obj in program)
+                {
+                    Console.WriteLine($"{i++}: {obj}");
+                }
+            }
             var virtualMachine = new VirtualMachine();
             virtualMachine.Run(program);
+
+
+
+
             //runConsole.WriteLine(program[program.Count() - 1]);
 
-            
+
 
 
 
@@ -76,12 +125,13 @@ namespace Compiler
 
 
 
+
         }
 
         static void G(Node node, int deep = 0)
         {
             if (node.kind == ParserEnums.Words.EMPTY) return;
-            Console.WriteLine(new string('-', deep)+node.kind);
+            Console.WriteLine(new string('-', deep) + node.kind);
             if (node.op1 != null)
             {
                 G(node.op1, deep + 1);
@@ -94,6 +144,11 @@ namespace Compiler
             {
                 G(node.op3, deep + 1);
             }
+        }
+
+        static bool IsNeedLogs(string[] args)
+        {
+            return args.Contains("-log");
         }
     }
 }

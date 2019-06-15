@@ -35,7 +35,9 @@ namespace Compiler.Keywords
             JNZ,
             JMP,
             HALT,
-            OUT
+            OUT,
+            DELFROMLL,
+            DELFROMHS
         }
     }
 }

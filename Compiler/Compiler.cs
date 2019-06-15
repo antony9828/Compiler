@@ -26,6 +26,26 @@ namespace Compiler
                     Generation(Instructions.Words.FETCH);
                     Generation(node.value);
                     break;
+                case ParserEnums.Words.ADDTOLL:
+                    Compile(node.op2);
+                    Generation(Instructions.Words.STORE);
+                    Generation(node.op1.value);
+                    break;
+                case ParserEnums.Words.REMOVEFROMLL:
+                    Compile(node.op2);
+                    Generation(Instructions.Words.DELFROMLL);
+                    Generation(node.op1.value);
+                    break;
+                case ParserEnums.Words.REMOVEFROMHS:
+                    Compile(node.op2);
+                    Generation(Instructions.Words.DELFROMHS);
+                    Generation(node.op1.value);
+                    break;
+                case ParserEnums.Words.ADDTOHS:
+                    Compile(node.op2);
+                    Generation(Instructions.Words.STORE);
+                    Generation(node.op1.value);
+                    break;
                 case ParserEnums.Words.CONST:
                     Generation(Instructions.Words.PUSH);
                     Generation(node.value);
@@ -50,10 +70,21 @@ namespace Compiler
                     Generation(Instructions.Words.LT);
                     break;
                 case ParserEnums.Words.SET:
-                    Compile(node.op2);
-                    Generation(Instructions.Words.STORE);
-                    Generation(node.op1.value);
-                    break;
+                    if(node.op1 != null && node.op2 != null && node.op3 != null)
+                    {
+                        Generation(Instructions.Words.PUSH);
+                        Generation($"{node.op2.value},{node.op3.value}");
+                        Generation(Instructions.Words.STORE);
+                        Generation(node.op1.value);
+                        break;
+                    }
+                    else
+                    {
+                        Compile(node.op2);
+                        Generation(Instructions.Words.STORE);
+                        Generation(node.op1.value);
+                        break;
+                    }
                 case ParserEnums.Words.IF1:
                     Compile(node.op1);
                     Generation(Instructions.Words.JZ);

@@ -44,7 +44,14 @@ namespace Compiler.Keywords
             EQUAL,
             SEMICOLON,
             EOF,
-            PRINT
+            PRINT,
+            ADDLL,
+            GETLL,
+            REMOVELL,
+            DOT,
+            CONTAINSHS,
+            REMOVEHS,
+            ADDHS
         }
     }
 }
